@@ -1,0 +1,3 @@
+[submodule "protocol"]
+	path = protocol
+	url = https://github.com/humancloud/stackinsights-data-collect-protocol.git

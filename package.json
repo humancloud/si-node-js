@@ -1,0 +1,92 @@
+{
+  "name": "stackinsights-backend-js",
+  "version": "0.6.0",
+  "description": "The NodeJS agent for StackInsights",
+  "homepage": "stackinsights.ai",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "postinstall": "node -e \"if(require('fs').existsSync('.git')){process.exit(1)}\" || husky install",
+    "prepare": "npm run generate-source",
+    "generate-source": "scripts/protoc.sh",
+    "build": "npm run clean && npm run prepare && tsc --build src && OUT_DIR=lib/proto/ scripts/protoc.sh",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "prettier --write \"src/**/*.ts\"",
+    "lint-staged": "lint-staged",
+    "test": "DEBUG=testcontainers* jest",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "clean": "(rm -rf src/proto || true) && (rm -rf src/proto || true) && (rm -rf lib || true)",
+    "package-src": "tar -zcvf stackinsights-nodejs-src-$npm_package_version.tgz --exclude bin --exclude .git --exclude .idea --exclude .DS_Store --exclude .github --exclude node_modules --exclude stackinsights-nodejs-src-$npm_package_version.tgz .",
+    "release-src": "npm run prepare && npm run package-src && gpg --batch --yes --armor --detach-sig stackinsights-nodejs-src-$npm_package_version.tgz && shasum -a 512 stackinsights-nodejs-src-$npm_package_version.tgz > stackinsights-nodejs-src-$npm_package_version.tgz.sha512"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "keywords": [
+    "StackInsights",
+    "APM",
+    "Dapper",
+    "Tracing",
+    "Agent",
+    "Instrumentation"
+  ],
+  "author": "StackInsights Team",
+  "license": "Stackinsights-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/humancloud/si-node-js"
+  },
+  "bugs": {
+    "url": "https://github.com/humancloud/stackinsights/issues",
+    "email": "dev@stackinsights.ai"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.9",
+    "@types/google-protobuf": "^3.7.2",
+    "@types/ioredis": "^4.26.4",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^14.0.11",
+    "@types/semver": "^7.2.0",
+    "@types/uuid": "^8.0.0",
+    "@typescript-eslint/parser": "^5.10.1",
+    "amqplib": "^0.7.0",
+    "axios": "^0.21.0",
+    "eslint": "^8.8.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-header": "^3.1.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "express": "^4.17.1",
+    "grpc-tools": "^1.11.1",
+    "grpc_tools_node_protoc_ts": "^5.3.0",
+    "ioredis": "^4.27.2",
+    "jest": "^26.6.3",
+    "lint-staged": "^12.3.2",
+    "mongodb": "^3.6.4",
+    "mongoose": "^5.12.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
+    "pg": "^8.5.1",
+    "prettier": "^2.5.1",
+    "testcontainers": "^6.2.0",
+    "ts-jest": "^26.4.4",
+    "ts-node": "^8.10.2",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^3.9.5",
+    "wait-for-expect": "^3.0.2"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.6.7",
+    "google-protobuf": "^3.14.0",
+    "husky": "^7.0.4",
+    "semver": "^7.3.2",
+    "tslib": "^2.0.3",
+    "uuid": "^8.1.0",
+    "winston": "^3.2.1"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint",
+      "prettier --write"
+    ]
+  }
+}

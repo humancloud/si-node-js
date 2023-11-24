@@ -1,0 +1,22 @@
+/*!
+ *
+ * Copyrights to StackInsights
+ * All rights are reserved 2019
+ *
+ */
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.apache.stackinsights.apm.network.servicemesh.v3.compat";
+option csharp_namespace = "StackInsights.NetworkProtocol.V3.Compat";
+option go_package = "stackinsights.apache.org/repo/goapi/collect/servicemesh/v3";
+option deprecated = true;
+
+import "service-mesh-probe/service-mesh.proto";
+
+// Define metrics report service. The metrics format is typically representing the data model collected in the service mesh case.
+service ServiceMeshMetricService {
+    rpc collect(stream stackinsights.v3.ServiceMeshMetric) returns (stackinsights.v3.MeshProbeDownstream) {
+    }
+}

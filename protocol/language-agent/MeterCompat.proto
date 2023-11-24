@@ -1,0 +1,23 @@
+/*!
+ *
+ * Copyrights to StackInsights
+ * All rights are reserved 2019
+ *
+ */
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.apache.stackinsights.apm.network.language.agent.v3.compat";
+option go_package = "stackinsights.apache.org/repo/goapi/collect/language/agent/v3";
+option csharp_namespace = "StackInsights.NetworkProtocol.V3.Compat";
+option deprecated = true;
+
+import "common/Common.proto";
+import "language-agent/Meter.proto";
+
+service MeterReportService {
+    // Meter data is reported in a certain period. The agent/SDK should report all collected metrics in this period through one stream.
+    rpc collect (stream stackinsights.v3.MeterData) returns (stackinsights.v3.Commands) {
+    }
+}

@@ -1,0 +1,33 @@
+#
+# Copyrights to StackInsights
+# All rights are reserved 2019
+#
+
+version: '2.1'
+
+services:
+  collector:
+    image: ghcr.io/apache/stackinsights-agent-test-tool/mock-collector:2ed17bb73eb993cc7d4effa7a5a36dd91a9ec8cd
+    ports:
+      - 12800:12800
+    networks:
+      - traveling-light
+    healthcheck:
+      test: [ "CMD", "bash", "-c", "cat < /dev/null > /dev/tcp/127.0.0.1/12800" ]
+      interval: 5s
+      timeout: 60s
+      retries: 120
+
+  agent:
+    build:
+      context: ../../../
+      dockerfile: tests/plugins/common/Dockerfile.agent
+      args:
+        - SW_NODE_VERSION=${SW_NODE_VERSION:-latest}
+    environment:
+      SW_AGENT_COLLECTOR_BACKEND_SERVICES: collector:19876
+    networks:
+      - traveling-light
+
+networks:
+  traveling-light:

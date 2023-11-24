@@ -1,0 +1,6 @@
+node_modules
+.idea
+lib
+src/proto/
+*.log
+tsconfig.tsbuildinfo

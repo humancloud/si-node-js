@@ -1,0 +1,12 @@
+skywalking
+ARG SW_NODE_VERSION
+
+FROM node:${SW_NODE_VERSION}
+
+ARG ROOT=.
+
+WORKDIR /app
+
+ADD $ROOT /app
+
+RUN npm install request && npm install

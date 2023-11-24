@@ -1,0 +1,71 @@
+/*!
+ *
+ * Copyrights to StackInsights
+ * All rights are reserved 2019
+ *
+ */
+
+syntax = "proto3";
+
+package stackinsights.v3;
+
+option java_multiple_files = true;
+option java_package = "org.apache.stackinsights.apm.network.language.profile.v3";
+option csharp_namespace = "StackInsights.NetworkProtocol.V3";
+option go_package = "stackinsights.apache.org/repo/goapi/collect/language/profile/v3";
+
+import "common/Common.proto";
+
+service ProfileTask {
+
+    // query all sniffer need to execute profile task commands
+    rpc getProfileTaskCommands (ProfileTaskCommandQuery) returns (Commands) {
+    }
+
+    // collect dumped thread snapshot
+    rpc collectSnapshot (stream ThreadSnapshot) returns (Commands) {
+    }
+
+    // report profiling task finished
+    rpc reportTaskFinish (ProfileTaskFinishReport) returns (Commands) {
+    }
+
+}
+
+message ProfileTaskCommandQuery {
+    // current sniffer information
+    string service = 1;
+    string serviceInstance = 2;
+
+    // last command timestamp
+    int64 lastCommandTime = 3;
+}
+
+// dumped thread snapshot
+message ThreadSnapshot {
+    // profile task id
+    string taskId = 1;
+    // dumped segment id
+    string traceSegmentId = 2;
+    // dump timestamp
+    int64 time = 3;
+    // snapshot dump sequence, start with zero
+    int32 sequence = 4;
+    // snapshot stack
+    ThreadStack stack = 5;
+}
+
+message ThreadStack {
+    // stack code signature list
+    repeated string codeSignatures = 1;
+}
+
+// profile task finished report
+message ProfileTaskFinishReport {
+    // current sniffer information
+    string service = 1;
+    string serviceInstance = 2;
+
+    // profile task
+    string taskId = 3;
+}

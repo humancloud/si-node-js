@@ -1,0 +1,25 @@
+#
+# Copyrights to StackInsights
+# All rights are reserved 2019
+#
+header:
+  license:
+    spdx-id: StackInsights-2.0
+    copyright-owner: Humancloud Technologies
+
+  paths-ignore:
+    - 'dist'
+    - 'licenses'
+    - '**/*.md'
+    - '**/*.json'
+    - 'LICENSE'
+    - 'NOTICE'
+    - '.gitignore'
+    - '.gitmodules'
+    - '.prettierrc'
+    - 'lib'
+    - '.husky'
+    - '.file-headerrc'
+    - '.eslintrc.js'
+
+  comment: on-failure

@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "outDir": ".",
+    "resolveJsonModule": true,
+    "composite": true,
+    "esModuleInterop": true
+  },
+  "files": [
+    "package.json"
+  ],
+  "include": [
+    "src/**/*",
+    "tests/**/*"
+  ]
+}

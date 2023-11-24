@@ -1,0 +1,22 @@
+/*!
+ *
+ * Copyrights to StackInsights
+ * All rights are reserved 2019
+ *
+ */
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.apache.stackinsights.apm.network.language.agent.v3.compat";
+option csharp_namespace = "StackInsights.NetworkProtocol.V3.Compat";
+option go_package = "stackinsights.apache.org/repo/goapi/collect/language/agent/v3";
+option deprecated = true;
+
+import "common/Common.proto";
+import "language-agent/CLRMetric.proto";
+
+service CLRMetricReportService {
+    rpc collect (stackinsights.v3.CLRMetricCollection) returns (stackinsights.v3.Commands) {
+    }
+}

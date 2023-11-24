@@ -1,0 +1,119 @@
+#
+# Copyrights to StackInsights
+# All rights are reserved 2019
+#
+
+segmentItems:
+  - serviceName: server
+    segmentSize: 1
+    segments:
+      - segmentId: not null
+        spans:
+          - operationName: MongoDB/collection
+            operationId: 0
+            parentSpanId: 0
+            spanId: 1
+            spanLayer: Database
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 9
+            spanType: Exit
+            peer: mongo:27017
+            skipAnalysis: false
+            tags:
+              - { key: db.type, value: MongoDB }
+              - { key: db.instance, value: admin }
+              - { key: db.statement, value: 'collection("tests")' }
+          - operationName: Mongoose/ensureIndexes
+            operationId: 0
+            parentSpanId: 0
+            spanId: 2
+            spanLayer: Database
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 4006
+            spanType: Exit
+            peer: mongo:27017
+            skipAnalysis: false
+            tags:
+              - { key: db.type, value: MongoDB }
+              - { key: db.instance, value: admin }
+          - operationName: Mongoose/find
+            operationId: 0
+            parentSpanId: 0
+            spanId: 3
+            spanLayer: Database
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 4006
+            spanType: Exit
+            peer: mongo:27017
+            skipAnalysis: false
+            tags:
+              - { key: db.type, value: MongoDB }
+              - { key: db.instance, value: admin }
+              - { key: db.statement, value: 'tests.find({})' }
+          - operationName: GET:/mongoose
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: Http
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 49
+            spanType: Entry
+            peer: not null
+            skipAnalysis: false
+            tags:
+              - { key: coldStart, value: 'true' }
+              - { key: http.url, value: 'http://server:5000/mongoose' }
+              - { key: http.method, value: GET }
+              - { key: http.status.code, value: '200' }
+              - { key: http.status.msg, value: OK }
+            refs:
+              - parentEndpoint: ""
+                networkAddress: server:5000
+                refType: CrossProcess
+                parentSpanId: 1
+                parentTraceSegmentId: not null
+                parentServiceInstance: not null
+                parentService: client
+                traceId: not null
+  - serviceName: client
+    segmentSize: 1
+    segments:
+      - segmentId: not null
+        spans:
+          - operationName: GET:/mongoose
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: Http
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 49
+            spanType: Entry
+            peer: not null
+            skipAnalysis: false
+            tags:
+              - { key: coldStart, value: 'true' }
+              - { key: http.url, value: 'http://localhost:5001/mongoose' }
+              - { key: http.method, value: GET }
+              - { key: http.status.code, value: '200' }
+              - { key: http.status.msg, value: OK }
+          - operationName: /mongoose
+            operationId: 0
+            parentSpanId: 0
+            spanId: 1
+            spanLayer: Http
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 2
+            spanType: Exit
+            peer: server:5000
+            skipAnalysis: false
+            tags:
+              - { key: http.url, value: 'http://server:5000/mongoose' }
+              - { key: http.method, value: GET }
+              - { key: http.status.code, value: '200' }
+              - { key: http.status.msg, value: OK }

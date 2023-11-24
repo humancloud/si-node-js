@@ -1,0 +1,76 @@
+/*!
+ *
+ * Copyrights to StackInsights
+ * All rights are reserved 2019
+ *
+ */
+
+syntax = "proto3";
+
+package stackinsights.v3;
+
+option java_multiple_files = true;
+option java_package = "org.apache.stackinsights.apm.network.ebpf.profiling.v3";
+option go_package = "stackinsights.apache.org/repo/goapi/collect/ebpf/profiling/v3";
+
+import "common/Common.proto";
+
+// Define the Rover Process profiling task and upload profiling data.
+service EBPFProfilingService {
+    // Query profiling (start or stop) tasks
+    rpc queryTasks (EBPFProfilingTaskQuery) returns (Commands) {
+    }
+
+    // collect profiling data
+    rpc collectProfilingData (stream EBPFProfilingData) returns (Commands) {
+    }
+}
+
+message EBPFProfilingTaskQuery {
+    // rover instance id
+    string roverInstanceId = 1;
+
+    // latest task update time
+    int64 latestUpdateTime = 2;
+}
+
+message EBPFProfilingData {
+    // task metadata
+    EBPFProfilingTaskMetadata task = 1;
+    // profiling data
+    oneof profiling {
+        EBPFOnCPUProfiling onCPU = 2;
+    }
+}
+
+message EBPFProfilingTaskMetadata {
+    // profiling task id
+    string taskId = 1;
+    // profiling process id
+    string processId = 2;
+    // the start time of this profiling process
+    int64 profilingStartTime = 3;
+    // report time
+    int64 currentTime = 4;
+}
+
+message EBPFProfilingStackMetadata {
+    // stack type
+    EBPFProfilingStackType stackType = 1;
+    // stack id from kernel provide
+    int32 stackId = 2;
+    // stack symbols
+    repeated string stackSymbols = 3;
+}
+
+enum EBPFProfilingStackType {
+    PROCESS_KERNEL_SPACE = 0;
+    PROCESS_USER_SPACE = 1;
+}
+
+message EBPFOnCPUProfiling {
+    // stack data in one task(thread)
+    repeated EBPFProfilingStackMetadata stacks = 1;
+    // stack counts
+    int32 dumpCount = 2;
+}

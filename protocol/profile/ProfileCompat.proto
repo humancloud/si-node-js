@@ -1,0 +1,33 @@
+/*!
+ *
+ * Copyrights to StackInsights
+ * All rights are reserved 2019
+ *
+ */
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.apache.stackinsights.apm.network.language.profile.v3.compat";
+option csharp_namespace = "StackInsights.NetworkProtocol.V3.Compat";
+option go_package = "stackinsights.apache.org/repo/goapi/collect/language/profile/v3";
+option deprecated = true;
+
+import "common/Common.proto";
+import "profile/Profile.proto";
+
+service ProfileTask {
+
+    // query all sniffer need to execute profile task commands
+    rpc getProfileTaskCommands (stackinsights.v3.ProfileTaskCommandQuery) returns (stackinsights.v3.Commands) {
+    }
+
+    // collect dumped thread snapshot
+    rpc collectSnapshot (stream stackinsights.v3.ThreadSnapshot) returns (stackinsights.v3.Commands) {
+    }
+
+    // report profiling task finished
+    rpc reportTaskFinish (stackinsights.v3.ProfileTaskFinishReport) returns (stackinsights.v3.Commands) {
+    }
+
+}

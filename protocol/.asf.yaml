@@ -1,0 +1,25 @@
+
+#
+# Copyrights to StackInsights
+# All rights are reserved 2019
+#
+
+github:
+    description: Data Collect Protocols of StackInsights
+    homepage: https://stackinsights.ai/
+    labels:
+      - stackinsights
+      - observability
+      - apm
+      - distributed-tracing
+      - service-mesh
+      - dapper
+    enabled_merge_buttons:
+      squash:  true
+      merge:   false
+      rebase:  false
+    protected_branches:
+      master:
+        required_pull_request_reviews:
+          dismiss_stale_reviews: true
+          required_approving_review_count: 1
